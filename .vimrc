@@ -12,8 +12,16 @@ Plug 'sheerun/vim-polyglot'
 Plug 'scrooloose/nerdtree'
 
 " Ctrlp
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 
+" Autocomplete
+Plug 'ycm-core/YouCompleteMe'
+
+" git diff
+Plug 'airblade/vim-gitgutter'
+
+" folding
+Plug 'tmhedberg/SimpylFold'
 call plug#end()
 
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
@@ -87,4 +95,8 @@ map <C-n> :NERDTreeToggle<CR>
 " open current buffer in file tree
 nmap <leader>n :NERDTreeFind<CR>
 
+" disable default folding
+set nofoldenable
 
+" decimal base 10
+set nrformats=
