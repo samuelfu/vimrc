@@ -113,3 +113,7 @@ plugins=(
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 alias python="python3"
+
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^X^E' edit-command-line
