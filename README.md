@@ -1,7 +1,7 @@
 Must have: atuin (ctrl-r), fzf, ripgrep, bat
 
 
-
+```
 gd (Normal mode): Go to Definition
 
 This command jumps to the definition of the symbol under the cursor.
@@ -69,4 +69,4 @@ Additional LSP-related commands (not mapped to keys but available):
 :LspStart: Manually starts the language server for the current file type.
 :LspStop: Stops the language server for the current buffer.
 :LspRestart: Restarts the language server for the current buffer.
-
+```
