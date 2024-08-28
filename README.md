@@ -1,6 +1,17 @@
 Must have: atuin (ctrl-r), fzf, ripgrep, bat
 
-
+samuelfu@Samuels-MacBook-Pro ~ % npm list -g --depth=0
+/Users/samuelfu/.nvm/versions/node/v18.17.1/lib
+├── bash-language-server@5.4.0
+├── corepack@0.18.0
+├── eas-cli@7.2.0
+├── expo-cli@6.3.10
+├── express-generator@4.16.1
+├── npm@10.2.1
+├── serve@14.2.1
+├── typescript-language-server@4.3.3
+├── typescript@5.5.3
+└── yarn@1.22.22
 ```
 gd (Normal mode): Go to Definition
 
