@@ -1,4 +1,4 @@
-Must have: atuin (ctrl-r), fzf, ripgrep, bat
+Must have: atuin (ctrl-r), fzf, ripgrep, bat, homebrew, npm
 
 samuelfu@Samuels-MacBook-Pro ~ % npm list -g --depth=0
 /Users/samuelfu/.nvm/versions/node/v18.17.1/lib
