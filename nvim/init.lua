@@ -15,9 +15,19 @@ Plug('L3MON4D3/LuaSnip')
 Plug('VonHeikemen/lsp-zero.nvim', {['branch'] = 'v3.x'})
 Plug('williamboman/mason.nvim')
 Plug('williamboman/mason-lspconfig.nvim')
+Plug('tpope/vim-commentary')
+Plug('debugloop/telescope-undo.nvim')
 vim.call('plug#end')
 
+require('onedark').setup {
+    style = 'darker'
+}
 require('onedark').load()
+-- Custom telescope border highlights
+vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = "#FFFFFF" })
+vim.api.nvim_set_hl(0, "TelescopePromptBorder", { fg = "#5c6370" })
+vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { fg = "#5c6370" })
+vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { fg = "#5c6370" })
 
 -- LSP Setup
 local lsp = require('lsp-zero')
@@ -31,18 +41,20 @@ require('mason-lspconfig').setup({
     'lua_ls',
     'pyright',  -- Python language server
     'jdtls',    -- Java language server
+    'clangd',  -- C language server
   },
   handlers = {
     lsp.default_setup,
   },
 })
 
+-- LSP autosuggest navgiation
 local cmp = require('cmp')
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
 local cmp_mappings = lsp.defaults.cmp_mappings({
   ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
   ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-  ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+  ['<C-Enter>'] = cmp.mapping.confirm({ select = true }),
   ["<C-Space>"] = cmp.mapping.complete(),
 })
 
@@ -52,7 +64,7 @@ cmp.setup({
 
 lsp.on_attach(function(client, bufnr)
   local opts = {buffer = bufnr, remap = false}
-  vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
+  vim.keymap.set("n", "gd", function() vim.cmd("tab split") vim.lsp.buf.definition() end, opts)
   vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
   vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
   vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
@@ -77,7 +89,13 @@ require('lspconfig').pyright.setup({})
 -- Java setup
 require('lspconfig').jdtls.setup({})
 
+require('lspconfig').clangd.setup({})
+
+require('lspconfig').bashls.setup({})
+
 lsp.setup()
+
+vim.api.nvim_set_keymap('n', '<S-Tab>', ':Telescope buffers<CR>', { noremap = true, silent = true })
 
 vim.diagnostic.config({
     virtual_text = true
