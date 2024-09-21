@@ -12,11 +12,18 @@ Plug('neovim/nvim-lspconfig')
 Plug('hrsh7th/nvim-cmp')
 Plug('hrsh7th/cmp-nvim-lsp')
 Plug('L3MON4D3/LuaSnip')
-Plug('VonHeikemen/lsp-zero.nvim', {['branch'] = 'v3.x'})
+Plug('VonHeikemen/lsp-zero.nvim', {['branch'] = 'v4.x'})
 Plug('williamboman/mason.nvim')
 Plug('williamboman/mason-lspconfig.nvim')
 Plug('tpope/vim-commentary')
+Plug('tpope/vim-fugitive')
 Plug('debugloop/telescope-undo.nvim')
+Plug('nvim-treesitter/nvim-treesitter-context')
+Plug('karb94/neoscroll.nvim')
+Plug('mawkler/modicator.nvim')
+Plug('nvim-lualine/lualine.nvim')
+Plug('nvim-tree/nvim-web-devicons')
+Plug('OXY2DEV/markview.nvim')
 vim.call('plug#end')
 
 require('onedark').setup {
@@ -42,6 +49,8 @@ require('mason-lspconfig').setup({
     'pyright',  -- Python language server
     'jdtls',    -- Java language server
     'clangd',  -- C language server
+    'ruby_lsp',      -- Ruby LSP
+    'sorbet',       -- Sorbet
   },
   handlers = {
     lsp.default_setup,
@@ -89,13 +98,48 @@ require('lspconfig').pyright.setup({})
 -- Java setup
 require('lspconfig').jdtls.setup({})
 
-require('lspconfig').clangd.setup({})
+require('lspconfig').clangd.setup({
+})
 
 require('lspconfig').bashls.setup({})
 
+-- Ruby LSP setup
+require('lspconfig').ruby_lsp.setup({})
+
+-- Sorbet setup
+require('lspconfig').sorbet.setup({})
+
 lsp.setup()
 
+-- Shift tab to open buffers
 vim.api.nvim_set_keymap('n', '<S-Tab>', ':Telescope buffers<CR>', { noremap = true, silent = true })
+
+-- Smooth scrolling
+require('neoscroll').setup({
+  mappings = {                 -- Keys to be mapped to their corresponding default scrolling animation
+    '<C-u>', '<C-d>',
+    '<C-b>', '<C-f>',
+    '<C-y>', '<C-e>',
+    'zt', 'zz', 'zb',
+  },
+  hide_cursor = true,          -- Hide cursor while scrolling
+  stop_eof = true,             -- Stop at <EOF> when scrolling downwards
+  respect_scrolloff = false,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+  cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
+  easing = 'linear',           -- Default easing function
+  pre_hook = nil,              -- Function to run before the scrolling animation starts
+  post_hook = nil,             -- Function to run after the scrolling animation ends
+  performance_mode = false,    -- Disable "Performance Mode" on all buffers.
+})
+
+-- Visuals
+require('lualine').setup()
+require('modicator').setup()
+
+vim.o.termguicolors = true
+vim.o.cursorline = true
+vim.o.number = true
+vim.opt.showmode = false
 
 vim.diagnostic.config({
     virtual_text = true
